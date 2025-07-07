@@ -5,6 +5,7 @@ import {
   LoginInput,
   UserWithoutPassword,
 } from "../services/services.types";
+import { User } from "../models/User";
 
 export const registerController = async (req: Request, res: Response) => {
   try {
@@ -25,5 +26,14 @@ export const loginController = async (req: Request, res: Response) => {
     res.status(200).json(existingUser);
   } catch (error: unknown) {
     res.status(400).json({ message: (error as Error).message });
+  }
+};
+
+export const getAllUsersController = async (_req: Request, res: Response) => {
+  try {
+    const users = await User.find({}, "_id name email");
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: (error as Error).message });
   }
 };

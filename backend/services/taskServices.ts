@@ -20,7 +20,9 @@ export const createTask = async (taskData: CreateTaskInput): Promise<ITask> => {
       details: `Created task "${task.title}"`,
     });
 
-    getIO().emit("task-created", task);
+    const populatedTask = await task.populate("assignedTo", "name email");
+
+    getIO().emit("task-created", populatedTask);
   }
 
   return task;
@@ -63,7 +65,9 @@ export const updateTask = async (
       details: `Updated task "${updated.title}"`,
     });
 
-    getIO().emit("task-updated", updated);
+    const populatedTask = await updated.populate("assignedTo", "name email");
+
+    getIO().emit("task-updated", populatedTask);
   }
 
   return { task: updated || undefined };
@@ -126,7 +130,9 @@ export const smartAssign = async (taskId: string): Promise<ITask> => {
     details: `Smart assigned to ${targetUser.name}`,
   });
 
-  getIO().emit("task-updated", task);
+  const populatedTask = await task.populate("assignedTo", "name email");
+
+  getIO().emit("task-updated", populatedTask);
 
   return task;
 };
