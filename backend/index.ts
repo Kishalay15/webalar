@@ -15,7 +15,11 @@ const server = http.createServer(app);
 
 initSocket(server);
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://webalar-lyart.vercel.app",
+  })
+);
 app.use(express.json());
 
 connectDB();

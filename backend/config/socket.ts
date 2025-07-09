@@ -6,7 +6,7 @@ let io: Server;
 export const initSocket = (server: HTTPServer): Server => {
   io = new Server(server, {
     cors: {
-      origin: "*",
+      origin: "https://webalar-lyart.vercel.app",
     },
   });
 
